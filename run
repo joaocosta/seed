@@ -2,5 +2,17 @@
 
 set -e
 
-#sudo qemu-system-x86_64 -hda system.raw -hdb data.raw -net nic -net user -m 1024M -localtime -enable-kvm -nographic -kernel vmlinuz -initrd initrd.img -append "ks=file:///fedora20.ks"
-sudo qemu-system-x86_64 -hda system.raw -hdb data.raw -net nic -net user -m 1024M -localtime -enable-kvm
+source ./config
+
+sudo qemu-system-x86_64 \
+    -hda system.raw     \
+    -hdb data.raw       \
+    -net nic -net user  \
+    -m $MEMORY_SIZE     \
+    -localtime          \
+    -enable-kvm         \
+    -redir tcp:2223::22 \
+    -redir tcp:8889::80 \
+    -nographic          \
+    -virtfs local,path=$HOME,security_model=passthrough,mount_tag=host_home_dir 2>&1 > /dev/null < /dev/null &
+# mount -t 9p -o trans=virtio host_share /opt/src -oversion=9p2000.L
