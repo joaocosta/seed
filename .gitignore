@@ -1,2 +1,4 @@
 vmlinuz
 initrd.img
+data.raw
+system.raw
