@@ -2,6 +2,11 @@ seed
 ====
 
 When experimenting with software, it's useful to have a blank canvas.
+seed can bootstrap minimal centos/fedora OS disk that can run in qemu.
 
-Seed provides you with a minimal Fedora 23 installation running on qemu, so
-that you can experiment around without breaking your system.
+Usage
+----------
+./boot config.fedora23  # Bootstraps a disk image with a minimal fedora 23 installation.
+./boot config.centos7  # Or alternatively, bootstrap centos7
+./run # Starts a background qemu process running the created image
+ssh -p 2223 root@localhost # login to newly create VM
