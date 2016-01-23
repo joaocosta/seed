@@ -6,17 +6,20 @@ seed can bootstrap minimal centos/fedora OS disk that can run in qemu.
 
 Usage
 ----------
-    ./boot config.fedora23  # Bootstraps a disk image with a minimal fedora 23 installation.
-    ./boot config.centos7  # Or alternatively, bootstrap centos7
-    ./run # Starts a background qemu process running the created image
-    ssh -p 2223 root@localhost # login to newly create VM
-    ssh -p 2223 root@localhost shutdown now # Shutdown the VM
+    # Bootstrap base images
+    boot config.fedora23 ~/cluster/box1
+    boot config.centos7  ~/cluster/box2
 
-    # Create a snapshot ( shutdown VM first )
-    mv system.qcow2 baseos.qcow2
-    qemu-img create -f qcow2 -b baseos.qcow2 system.qcow2
+    # Start them up
+    ~/cluster/box1/run
 
-    # Revert to snapshot ( shutdown VM first )
-    rm system.qcow2
-    qemu-img create -f qcow2 -b baseos.qcow2 system.qcow2
+    # Login to new box
+    ssh -p 2223 root@localhost 
+
+    # Shut it down
+    ssh -p 2223 root@localhost shutdown now
+
+    # Revert to initial snapshot ( shutdown VM first )
+    rm ~/cluster/box1/system.qcow2
+    qemu-img create -f qcow2 -b ~/cluster/box1/baseos.qcow2 ~/cluster/box1/system.qcow2
 
