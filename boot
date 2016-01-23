@@ -30,7 +30,7 @@ echo Booting system and installing via kickstart
 sudo qemu-system-x86_64     \
         -drive file=system.qcow2,format=qcow2,index=0,media=disk     \
         -net nic -net user  \
-        -m $MEMORY_SIZE     \
+        -m 1024M            \
         -localtime          \
         -enable-kvm         \
         -no-reboot          \

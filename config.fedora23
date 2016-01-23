@@ -3,4 +3,3 @@ INITRD_URL=http://download.fedoraproject.org/pub/fedora/linux/releases/23/Server
 KS_FILE=fedora23.ks
 
 SYSTEM_DISK_SIZE=10G
-MEMORY_SIZE=1024M
