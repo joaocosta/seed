@@ -9,7 +9,7 @@ selinux --disabled
 firewall --disabled
 services --enabled=NetworkManager,sshd
 eula --agreed
-rootpw --plaintext password
+rootpw --plaintext root
 ignoredisk --only-use=sda
 bootloader --location=mbr --timeout=0
 zerombr
@@ -43,6 +43,18 @@ dnf -y install augeas
 augtool -s <<EOF
 #root login needs to be enabled during initial setup so the project specific scripts can be executed
 set /files/etc/ssh/sshd_config/PermitRootLogin yes
+EOF
+
+cat /etc/fedora-release > /etc/motd
+
+cat << 'EOF' >> /etc/motd
+\ \        / / | |
+ \ \  /\  / /__| | ___ ___  _ __ ___   ___
+  \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \
+   \  /\  /  __/ | (_| (_) | | | | | |  __/
+    \/  \/ \___|_|\___\___/|_| |_| |_|\___|
+
+root password is 'root'
 EOF
 
 %end
