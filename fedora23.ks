@@ -43,11 +43,12 @@ dnf -y install augeas
 augtool -s <<EOF
 #root login needs to be enabled during initial setup so the project specific scripts can be executed
 set /files/etc/ssh/sshd_config/PermitRootLogin yes
+set /files/etc/ssh/sshd_config/Banner /etc/ssh/sshd-banner
 EOF
 
-cat /etc/fedora-release > /etc/motd
+cat /etc/system-release > /etc/ssh/sshd-banner
 
-cat << 'EOF' >> /etc/motd
+cat << 'EOF' >> /etc/ssh/sshd-banner
 \ \        / / | |
  \ \  /\  / /__| | ___ ___  _ __ ___   ___
   \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \

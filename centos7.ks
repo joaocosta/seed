@@ -43,6 +43,7 @@ dnf -y install augeas
 augtool -s <<EOF
 #root login needs to be enabled during initial setup so the project specific scripts can be executed
 set /files/etc/ssh/sshd_config/PermitRootLogin yes
+set /files/etc/ssh/sshd_config/Banner /etc/ssh/sshd-banner
 
 #This saves time during vm startup
 set /files/etc/grub.conf/timeout 0
@@ -51,7 +52,9 @@ set /files/etc/grub.conf/timeout 0
 rm /files/etc/sudoers/Defaults[requiretty]
 EOF
 
-cat << 'EOF' >> /etc/motd
+cat /etc/system-release > /etc/ssh/sshd-banner
+
+cat << 'EOF' >> /etc/ssh/banner
 \ \        / / | |
  \ \  /\  / /__| | ___ ___  _ __ ___   ___
   \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \
