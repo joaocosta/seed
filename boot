@@ -1,8 +1,14 @@
 #!/bin/bash
 
+if [ -z "$1" ]
+  then
+  echo -e "Usage: $0 CONFIG_FILE"
+  exit 1
+fi
+
 set -euo pipefail
 
-source ./config
+source $1
 
 echo Fetching kernel and initrd image if needed
 wget -N $VMLINUZ_URL

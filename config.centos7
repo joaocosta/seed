@@ -1,0 +1,6 @@
+VMLINUZ_URL=http://mirror.centos.org/centos/7/os/x86_64/images/pxeboot/vmlinuz
+INITRD_URL=http://mirror.centos.org/centos/7/os/x86_64/images/pxeboot/initrd.img
+KS_FILE=centos7.ks
+
+SYSTEM_DISK_SIZE=10G
+MEMORY_SIZE=1024M
