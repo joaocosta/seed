@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
+BASE_DIR=$(dirname `readlink -e $0`)
 sudo qemu-system-x86_64 \
-    -hda system.qcow2    \
+    -drive file=${BASE_DIR}/system.qcow2,format=qcow2,index=0,media=disk     \
     -net nic -net user  \
     -m 1024M            \
     -localtime          \
