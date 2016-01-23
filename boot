@@ -1,32 +1,34 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 source ./config
 
+echo Fetching kernel and initrd image if needed
 wget -N $VMLINUZ_URL
 wget -N $INITRD_URL
 
+# Injecting the kickstart file into the initrd image prevents the dependency
+# on an external PXE boot or HTTP server to serve the kickstart file
+echo Injecting kickstart file in the initrd image.
 cp initrd.img initrd_ks.img
 echo $KS_FILE | cpio -c -o >> initrd_ks.img
 
-if [ ! -f system.raw ]; then
-    dd if=/dev/zero of=system.raw bs=1024k count=$SYSTEM_DISK_SIZE
-fi
+echo Creating new system image disk file
+rm -f system.qcow2
+qemu-img create -f qcow2 -o preallocation=falloc system.qcow2 $SYSTEM_DISK_SIZE
 
-if [ ! -f data.raw ]; then
-    dd if=/dev/zero of=data.raw bs=1024k count=$DATA_DISK_SIZE
-fi
-
+### Boot from kernel and initrd image which will 
+### do an OS install from the provided kickstart file
+echo Booting system and installing via kickstart
 sudo qemu-system-x86_64     \
-        -hda system.raw     \
-        -hdb data.raw       \
+        -drive file=system.qcow2,format=qcow2,index=0,media=disk     \
         -net nic -net user  \
         -m $MEMORY_SIZE     \
         -localtime          \
         -enable-kvm         \
-        -nographic          \
         -no-reboot          \
         -kernel vmlinuz     \
         -initrd initrd_ks.img   \
-        -append "ks=file:///$KS_FILE console=ttyS0 panic=1"
+        -append "ks=file:/$KS_FILE console=ttyS0 panic=1" \
+        -nographic

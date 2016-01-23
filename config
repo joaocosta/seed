@@ -1,7 +1,6 @@
-VMLINUZ_URL=http://download.fedoraproject.org/pub/fedora/linux/releases/20/Fedora/x86_64/os/images/pxeboot/vmlinuz
-INITRD_URL=http://download.fedoraproject.org/pub/fedora/linux/releases/20/Fedora/x86_64/os/isolinux/initrd.img
-KS_FILE=fedora20.ks
+VMLINUZ_URL=http://download.fedoraproject.org/pub/fedora/linux/releases/23/Server/x86_64/os/isolinux/vmlinuz
+INITRD_URL=http://download.fedoraproject.org/pub/fedora/linux/releases/23/Server/x86_64/os/isolinux/initrd.img
+KS_FILE=fedora23.ks
 
-SYSTEM_DISK_SIZE=6144
-DATA_DISK_SIZE=15360
+SYSTEM_DISK_SIZE=10G
 MEMORY_SIZE=1024M

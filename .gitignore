@@ -1,5 +1,4 @@
 vmlinuz
 initrd.img
 initrd_ks.img
-data.raw
-system.raw
+system.qcow2
