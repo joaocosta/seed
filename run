@@ -5,8 +5,7 @@ set -e
 source ./config
 
 sudo qemu-system-x86_64 \
-    -hda system.raw     \
-    -hdb data.raw       \
+    -hda system.qcow2    \
     -net nic -net user  \
     -m $MEMORY_SIZE     \
     -localtime          \
