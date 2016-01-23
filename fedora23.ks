@@ -24,7 +24,7 @@ repo --name=base --baseurl=http://download.fedoraproject.org/pub/fedora/linux/re
 
 url --url="http://download.fedoraproject.org/pub/fedora/linux/releases/23/Server/x86_64/os"
 
-%packages --nobase --ignoremissing
+%packages
 @core
 augeas
 %end
