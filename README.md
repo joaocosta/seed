@@ -2,7 +2,7 @@ seed
 ====
 
 When experimenting with software, it's useful to have a blank canvas.
-seed can bootstrap minimal centos/fedora OS disk that can run in qemu.
+seed can bootstrap minimal centos/fedora OS disk images that can run in qemu.
 
 Usage
 ----------
