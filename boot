@@ -34,13 +34,13 @@ cd -
 echo Creating new system image disk file
 mkdir -p ${TARGET_DIR}
 cp ${KICKSTART_DIR}/run ${TARGET_DIR}/.
-qemu-img create -f qcow2 -o preallocation=falloc ${TARGET_DIR}/baseos.qcow2 $SYSTEM_DISK_SIZE
+qemu-img create -f qcow2 -o preallocation=falloc ${TARGET_DIR}/initial_image.qcow2 $SYSTEM_DISK_SIZE
 
 ### Boot from kernel and initrd image which will 
 ### do an OS install from the provided kickstart file
 echo Booting system and installing via kickstart
 sudo qemu-system-x86_64     \
-        -drive file=${TARGET_DIR}/baseos.qcow2,format=qcow2,index=0,media=disk     \
+        -drive file=${TARGET_DIR}/initial_image.qcow2,format=qcow2,index=0,media=disk     \
         -net nic -net user  \
         -m 1024M            \
         -localtime          \
@@ -51,5 +51,6 @@ sudo qemu-system-x86_64     \
         -append "ks=file:/$KS_FILE console=ttyS0 panic=1" \
         -nographic
 
-qemu-img create -f qcow2 -b ${TARGET_DIR}/baseos.qcow2 ${TARGET_DIR}/system.qcow2
+qemu-img create -f qcow2 -b ${TARGET_DIR}/initial_image.qcow2 ${TARGET_DIR}/snapshot1.qcow2
+ln -vs ${TARGET_DIR}/snapshot1.qcow2 ${TARGET_DIR}/running_image
 rm -vfR ${WORK_DIR}

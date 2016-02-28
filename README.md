@@ -20,6 +20,7 @@ Usage
     ssh -p 2223 root@localhost shutdown now
 
     # Revert to initial snapshot ( shutdown VM first )
-    rm ~/cluster/box1/system.qcow2
-    qemu-img create -f qcow2 -b ~/cluster/box1/baseos.qcow2 ~/cluster/box1/system.qcow2
+    qemu-img create -f qcow2 -b ~/cluster/box1/baseos.qcow2 ~/cluster/box1/new_image.qcow2
+    rm ~/cluster/box1/running_image
+    ln -vs ~/cluster/box1/new_image.qcow2 ~/cluster/box1/running_image
 
