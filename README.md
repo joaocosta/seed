@@ -25,7 +25,7 @@ Usage
     echo HOST_INTERFACE=127.0.1.2 > ~/cluster/box1/box.cfg
     ~/cluster/box1/run
 
-    ## Or override them command line
+    ## Or override them in the command line
     ~/cluster/box2/run -i 127.0.1.3
 
     # Revert to initial snapshot ( shutdown VM first )
