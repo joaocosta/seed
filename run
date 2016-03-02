@@ -2,15 +2,32 @@
 
 set -euo pipefail
 
+HOST_INTERFACE="127.0.1.1"
+
+while getopts ":i:" opt; do
+  case $opt in
+    i)
+      HOST_INTERFACE=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+
 BASE_DIR=$(dirname `readlink -e $0`)
 sudo qemu-system-x86_64 \
     -drive file=${BASE_DIR}/running_image,format=qcow2,index=0,media=disk     \
-    -net nic -net user  \
+    -net nic            \
     -m 1024M            \
     -localtime          \
     -enable-kvm         \
-    -redir tcp:2223::22 \
-    -redir tcp:8889::80 \
+    -net user,hostfwd=tcp:${HOST_INTERFACE}:22-:22,hostfwd=tcp:${HOST_INTERFACE}:80-:80,hostfwd=tcp:${HOST_INTERFACE}:443-:443 \
     -nographic          \
     -virtfs local,path=$HOME,security_model=passthrough,mount_tag=host_home_dir 2>&1 > /dev/null < /dev/null &
 # mount -t 9p -o trans=virtio host_share /opt/src -oversion=9p2000.L
+
+echo
+echo Login with:
+echo "    ssh root@${HOST_INTERFACE}"
+echo

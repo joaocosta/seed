@@ -11,13 +11,14 @@ Usage
     boot config.centos7  ~/cluster/box2
 
     # Start them up
-    ~/cluster/box1/run
+    ~/cluster/box1/run -i 127.0.1.1
+    ~/cluster/box2/run -i 127.0.1.2
 
     # Login to new box
-    ssh -p 2223 root@localhost 
+    ssh root@127.0.1.1
 
     # Shut it down
-    ssh -p 2223 root@localhost shutdown now
+    ssh root@127.0.1.1 shutdown now
 
     # Revert to initial snapshot ( shutdown VM first )
     qemu-img create -f qcow2 -b ~/cluster/box1/baseos.qcow2 ~/cluster/box1/new_image.qcow2
