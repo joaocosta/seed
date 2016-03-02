@@ -2,7 +2,10 @@
 
 set -euo pipefail
 
+BASE_DIR=$(dirname `readlink -e $0`)
 HOST_INTERFACE="127.0.1.1"
+
+test -f ${BASE_DIR}/box.cfg && . ${BASE_DIR}/box.cfg
 
 while getopts ":i:" opt; do
   case $opt in
@@ -15,7 +18,6 @@ while getopts ":i:" opt; do
   esac
 done
 
-BASE_DIR=$(dirname `readlink -e $0`)
 sudo qemu-system-x86_64 \
     -drive file=${BASE_DIR}/running_image,format=qcow2,index=0,media=disk     \
     -net nic            \

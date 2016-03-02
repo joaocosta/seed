@@ -11,14 +11,22 @@ Usage
     boot config.centos7  ~/cluster/box2
 
     # Start them up
-    ~/cluster/box1/run -i 127.0.1.1
-    ~/cluster/box2/run -i 127.0.1.2
+
+    ## Using defaults
+    ~/cluster/box1/run
 
     # Login to new box
     ssh root@127.0.1.1
 
     # Shut it down
     ssh root@127.0.1.1 shutdown now
+
+    ## Optionally set startup config values in box.cfg
+    echo HOST_INTERFACE=127.0.1.2 > ~/cluster/box1/box.cfg
+    ~/cluster/box1/run
+
+    ## Or override them command line
+    ~/cluster/box2/run -i 127.0.1.3
 
     # Revert to initial snapshot ( shutdown VM first )
     qemu-img create -f qcow2 -b ~/cluster/box1/baseos.qcow2 ~/cluster/box1/new_image.qcow2
